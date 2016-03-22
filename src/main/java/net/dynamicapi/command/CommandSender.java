@@ -1,5 +1,7 @@
 package net.dynamicapi.command;
 
+import net.minecraft.command.ICommandSender;
+
 /**
  * Represents a minecraft command sender interpretation by the API.
  */
@@ -21,4 +23,10 @@ public interface CommandSender {
      * @param message the message
      */
     void sendChatMessage(String message);
+
+    /**
+     * Gets the handle of the object.
+     * @return handle
+     */
+    ICommandSender getHandle();
 }

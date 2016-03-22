@@ -5,6 +5,7 @@ import net.dynamicapi.command.CommandSender;
 import net.dynamicapi.command.DynamicCommand;
 import net.dynamicapi.command.defaults.CommandAPIVersion;
 import net.dynamicapi.command.defaults.CommandAbout;
+import net.dynamicapi.command.defaults.CommandHelp;
 import net.minecraft.command.AbstractCommand;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandHandler;
@@ -60,6 +61,11 @@ public class DynamicAPI {
                     public void sendChatMessage(String message) {
                         iCommandSender.sendTextComponent(new StringTextComponent(message));
                     }
+
+                    @Override
+                    public ICommandSender getHandle() {
+                        return iCommandSender;
+                    }
                 };
                 command.execute(sender, strings);
             }
@@ -80,6 +86,11 @@ public class DynamicAPI {
                     @Override
                     public void sendChatMessage(String message) {
                         iCommandSender.sendTextComponent(new StringTextComponent(message));
+                    }
+
+                    @Override
+                    public ICommandSender getHandle() {
+                        return iCommandSender;
                     }
                 };
                 return command.permission(sender);
@@ -109,5 +120,6 @@ public class DynamicAPI {
         LOGGER.info("[DynamicAPI] Registering internal assets...");
         DynamicAPI.registerCommand(new CommandAPIVersion());
         DynamicAPI.registerCommand(new CommandAbout());
+        DynamicAPI.registerCommand(new CommandHelp());
     }
 }
