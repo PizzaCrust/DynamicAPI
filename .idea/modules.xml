@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DynamicAPI.iml" filepath="$PROJECT_DIR$/.idea/modules/DynamicAPI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DynamicAPI_main.iml" filepath="$PROJECT_DIR$/.idea/modules/DynamicAPI_main.iml" group="DynamicAPI" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DynamicAPI_test.iml" filepath="$PROJECT_DIR$/.idea/modules/DynamicAPI_test.iml" group="DynamicAPI" />
+    </modules>
+  </component>
+</project>

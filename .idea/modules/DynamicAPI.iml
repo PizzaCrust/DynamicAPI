@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="DynamicAPI" external.linked.project.path="$MCP_LOC$/eclipse/DynamicAPI" external.root.project.path="$MCP_LOC$/eclipse/DynamicAPI" external.system.id="GRADLE" external.system.module.group="net.pizzacrust" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MCP_LOC$/eclipse/DynamicAPI">
+      <excludeFolder url="file://$MCP_LOC$/eclipse/DynamicAPI/.gradle" />
+      <excludeFolder url="file://$MCP_LOC$/eclipse/DynamicAPI/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
