@@ -4,6 +4,7 @@ import net.blockframe.internal.Injection;
 import net.dynamicapi.command.CommandSender;
 import net.dynamicapi.command.DynamicCommand;
 import net.dynamicapi.command.defaults.CommandAPIVersion;
+import net.dynamicapi.command.defaults.CommandAbout;
 import net.minecraft.command.AbstractCommand;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandHandler;
@@ -107,5 +108,6 @@ public class DynamicAPI {
     public static void blockFrame() {
         LOGGER.info("[DynamicAPI] Registering internal assets...");
         DynamicAPI.registerCommand(new CommandAPIVersion());
+        DynamicAPI.registerCommand(new CommandAbout());
     }
 }
