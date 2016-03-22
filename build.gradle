@@ -8,4 +8,5 @@ repositories {
 }
 
 dependencies {
+    compile files('libs/BlockFramework.jar')
 }
