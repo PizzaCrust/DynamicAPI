@@ -6,6 +6,7 @@ import net.dynamicapi.command.DynamicCommand;
 import net.dynamicapi.command.defaults.CommandAPIVersion;
 import net.dynamicapi.command.defaults.CommandAbout;
 import net.dynamicapi.command.defaults.CommandHelp;
+import net.dynamicapi.plugin.PluginLoader;
 import net.minecraft.command.AbstractCommand;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandHandler;
@@ -16,6 +17,8 @@ import net.minecraft.util.BlockPosition;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.List;
 
 /**
@@ -121,5 +124,23 @@ public class DynamicAPI {
         DynamicAPI.registerCommand(new CommandAPIVersion());
         DynamicAPI.registerCommand(new CommandAbout());
         DynamicAPI.registerCommand(new CommandHelp());
+        LOGGER.info("[DynamicAPI] Searching for dynamic plugins...");
+        File[] dynamicFiles = Injection.PLUGINS_DIR.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".dynamic");
+            }
+        });
+        LOGGER.info("[DynamicAPI] Detected " + dynamicFiles.length + " dynamic plugins.");
+        for (File file : dynamicFiles) {
+            LOGGER.info("Loading file " + file.getName() + "...");
+            try {
+                PluginLoader.loadFile(file);
+            } catch (Exception e) {
+                LOGGER.error("Failed to load file " + file.getName());
+                e.printStackTrace();
+            }
+        }
+        LOGGER.info("[DynamicAPI] DynamicAPI has finished loading all dynamic plugins.");
     }
 }
