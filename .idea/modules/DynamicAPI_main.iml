@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="DynamicAPI:main" external.linked.project.path="$MCP_LOC$/eclipse/DynamicAPI" external.root.project.path="$MCP_LOC$/eclipse/DynamicAPI" external.system.id="GRADLE" external.system.module.group="net.pizzacrust" external.system.module.type="sourceSet" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
+<module external.linked.project.id="DynamicAPI:main" external.linked.project.path="$MCP_LOC$/eclipse/DynamicAPI" external.root.project.path="$MCP_LOC$/eclipse/DynamicAPI" external.system.id="GRADLE" external.system.module.group="net.pizzacrust" external.system.module.type="sourceSet" external.system.module.version="1.9.1-R0.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
     <output url="file://$MCP_LOC$/eclipse/DynamicAPI/build/classes/main" />
     <exclude-output />
     <content url="file://$MCP_LOC$/eclipse/DynamicAPI/src/main">
@@ -9,5 +9,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MCP_LOC$/eclipse/DynamicAPI/libs/remapped-framework.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

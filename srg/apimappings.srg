@@ -3,6 +3,7 @@ CL: aht net/minecraft/world/World
 CL: zj net/minecraft/entity/EntityPlayer
 CL: rr net/minecraft/entity/Entity
 CL: bc net/minecraft/command/ServerCommandManager
+CL: bz net/minecraft/command/CommandException
 CL: aba net/minecraft/entity/attribute/Crafter
 CL: cj net/minecraft/util/BlockPosition
 CL: h net/minecraft/command/AbstractCommandListener

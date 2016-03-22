@@ -1,5 +1,5 @@
 group 'net.pizzacrust'
-version '1.0-SNAPSHOT'
+version '1.9.1-R0.0-SNAPSHOT'
 
 apply plugin: 'java'
 
@@ -7,6 +7,35 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    specialsource
+}
+
 dependencies {
-    compile files('libs/BlockFramework.jar')
+    specialsource 'net.md-5:SpecialSource:1.7.3'
+    compile files('libs/remapped-framework.jar')
+}
+
+jar {
+    manifest {
+        attributes "PluginClass": "net.dynamicapi.DynamicAPI"
+    }
+}
+
+task remapFramework(type: JavaExec) {
+    classpath = configurations.specialsource
+    main = 'net.md_5.specialsource.SpecialSource'
+    args '--srg-in', 'srg/apimappings.srg', '--in-jar', 'libs/BlockFramework.jar', '--out-jar', 'libs/remapped-framework.jar'
+}
+
+task reverseFramework(type: JavaExec) {
+    classpath = configurations.specialsource
+    main = 'net.md_5.specialsource.SpecialSource'
+    args '--reverse', '--srg-in', 'srg/apimappings.srg', '--in-jar', 'libs/BlockFramework.jar', '--out-jar', 'libs/remapped-framework.jar'
+}
+
+task reverseMappingsForAPI(type: JavaExec) {
+    classpath = configurations.specialsource
+    main = 'net.md_5.specialsource.SpecialSource'
+    args '--reverse', '--srg-in', 'srg/apimappings.srg', '--in-jar', 'build/libs/DynamicAPI-' + version + '.jar', '--out-jar', 'build/libs/final.jar'
 }
