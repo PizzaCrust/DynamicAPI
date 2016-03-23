@@ -1,6 +1,10 @@
 package net.dynamicapi;
 
+import javassist.CtClass;
+import javassist.CtMethod;
+import net.blockframe.BlockFramework;
 import net.blockframe.internal.Injection;
+import net.blockframe.map.MappingsRegistry;
 import net.dynamicapi.command.CommandSender;
 import net.dynamicapi.command.DynamicCommand;
 import net.dynamicapi.command.defaults.CommandAPIVersion;
@@ -125,6 +129,25 @@ public class DynamicAPI {
     }
 
     public static void blockFrame() {
+        LOGGER.info("[DynamicAPI] Patching SpecialSource errors...");
+        try {
+            CtClass playerImplementation = BlockFramework.classPath.getCtClass("net.dynamicapi.impl.ImplementedPlayer");
+            for (CtMethod method : playerImplementation.getDeclaredMethods()) {
+                String getNameObfName = "h_";
+                String getDisplayObfName = "i_";
+                String getUnformattedTextObfName = "c";
+                if (method.getName().equals("getName")) {
+                    method.setBody("return this.vanilla." + getNameObfName + "();");
+                }
+                if (method.getName().equals("getDisplayName")) {
+                    method.setBody("return this.vanilla." + getDisplayObfName + "()." + getUnformattedTextObfName + "();");
+                }
+            }
+            playerImplementation.toClass();
+        } catch (Exception e) {
+            LOGGER.error("[DynamicAPI] Failed to patch SpecialSource errors, API may not work correctly!");
+            e.printStackTrace();
+        }
         LOGGER.info("[DynamicAPI] Registering internal assets...");
         DynamicAPI.registerCommand(new CommandAPIVersion());
         DynamicAPI.registerCommand(new CommandAbout());
