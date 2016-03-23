@@ -7,6 +7,8 @@ import net.dynamicapi.command.defaults.CommandAPIVersion;
 import net.dynamicapi.command.defaults.CommandAbout;
 import net.dynamicapi.command.defaults.CommandHelp;
 import net.dynamicapi.entity.EntityPlayer;
+import net.dynamicapi.event.handle.EventManager;
+import net.dynamicapi.event.nms.WorldEventListener;
 import net.dynamicapi.impl.ImplementedPlayer;
 import net.dynamicapi.plugin.PluginLoader;
 import net.minecraft.command.CommandException;
@@ -16,6 +18,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.WorldServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -127,6 +130,12 @@ public class DynamicAPI {
         DynamicAPI.registerCommand(new CommandAPIVersion());
         DynamicAPI.registerCommand(new CommandAbout());
         DynamicAPI.registerCommand(new CommandHelp());
+
+        for (WorldServer world : Injection.server.worldServers) {
+            world.addEventListener(new WorldEventListener());
+        }
+        LOGGER.info("[DynamicAPI] Starting event manager...");
+        EventManager.init();
         LOGGER.info("[DynamicAPI] Searching for dynamic plugins...");
         File[] dynamicFiles = Injection.PLUGINS_DIR.listFiles(new FilenameFilter() {
             @Override
