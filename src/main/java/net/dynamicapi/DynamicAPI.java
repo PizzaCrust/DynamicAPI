@@ -148,11 +148,11 @@ public class DynamicAPI {
         LOGGER.info("[DynamicAPI] DynamicAPI has finished loading all dynamic plugins.");
     }
 
-    public EntityPlayer getPlayerFromName(String name) {
+    public static EntityPlayer getPlayerFromName(String name) {
         return new ImplementedPlayer(Injection.server.getPlayerList().getPlayerByUsername(name));
     }
 
-    public EntityPlayer getPlayerFromUUID(UUID uuid) {
+    public static EntityPlayer getPlayerFromUUID(UUID uuid) {
         return new ImplementedPlayer(Injection.server.getPlayerList().getPlayerByUUID(uuid));
     }
 }
