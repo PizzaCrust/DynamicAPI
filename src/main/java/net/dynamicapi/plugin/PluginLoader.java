@@ -1,5 +1,6 @@
 package net.dynamicapi.plugin;
 
+import net.blockframe.BlockFramework;
 import net.blockframe.plugin.PluginManager;
 
 import java.io.File;
@@ -38,7 +39,7 @@ public class PluginLoader {
         Attributes attributes = jarFile.getManifest().getMainAttributes();
         String dynamicClass = attributes.getValue("DynamicClass");
         addURLs(new URL[] { file.toURI().toURL() });
-        URLClassLoader classLoader = new URLClassLoader(new URL[] { file.toURI().toURL() });
+        URLClassLoader classLoader = new URLClassLoader(new URL[] { file.toURI().toURL(), BlockFramework.class.getProtectionDomain().getCodeSource().getLocation().toURI().toURL() });
         Class mainClass = classLoader.loadClass(dynamicClass);
         // public static void pluginMain
         Method pluginMainMethod = mainClass.getDeclaredMethod("pluginMain", new Class[]{});
