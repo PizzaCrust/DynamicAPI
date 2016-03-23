@@ -34,7 +34,7 @@ task reverseFramework(type: JavaExec) {
     args '--reverse', '--srg-in', 'srg/apimappings.srg', '--in-jar', 'libs/BlockFramework.jar', '--out-jar', 'libs/remapped-framework.jar'
 }
 
-task reverseMappingsForAPI(type: JavaExec, dependsOn: assemble) {
+task assembleAPI(type: JavaExec, dependsOn: assemble) {
     classpath = configurations.specialsource
     main = 'net.md_5.specialsource.SpecialSource'
     args '--reverse', '--srg-in', 'srg/apimappings.srg', '--in-jar', 'build/libs/DynamicAPI-' + version + '.jar', '--out-jar', 'build/libs/final.jar'

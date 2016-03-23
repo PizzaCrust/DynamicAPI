@@ -7,13 +7,13 @@ import net.dynamicapi.command.defaults.CommandAPIVersion;
 import net.dynamicapi.command.defaults.CommandAbout;
 import net.dynamicapi.command.defaults.CommandHelp;
 import net.dynamicapi.plugin.PluginLoader;
-import net.minecraft.command.AbstractCommand;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandHandler;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.text.StringTextComponent;
-import net.minecraft.util.BlockPosition;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,7 +31,7 @@ public class DynamicAPI {
     public static final Logger LOGGER = LogManager.getLogger("DynamicAPI");
 
     public static void registerCommand(final DynamicCommand command) {
-        AbstractCommand mcCommand = new AbstractCommand() {
+        ICommand mcCommand = new ICommand() {
             @Override
             public String getCommandName() {
                 return command.name();
@@ -48,7 +48,7 @@ public class DynamicAPI {
             }
 
             @Override
-            public void onExecution(MinecraftServer minecraftServer, final ICommandSender iCommandSender, String[] strings) throws CommandException {
+            public void execute(MinecraftServer minecraftServer, final ICommandSender iCommandSender, String[] strings) throws CommandException {
                 CommandSender sender = new CommandSender() {
                     @Override
                     public String getName() {
@@ -62,7 +62,7 @@ public class DynamicAPI {
 
                     @Override
                     public void sendChatMessage(String message) {
-                        iCommandSender.sendTextComponent(new StringTextComponent(message));
+                        iCommandSender.addChatMessage(new TextComponentString(message));
                     }
 
                     @Override
@@ -74,7 +74,7 @@ public class DynamicAPI {
             }
 
             @Override
-            public boolean isSenderPermitted(MinecraftServer minecraftServer, final ICommandSender iCommandSender) {
+            public boolean checkPermission(MinecraftServer minecraftServer, final ICommandSender iCommandSender) {
                 CommandSender sender = new CommandSender() {
                     @Override
                     public String getName() {
@@ -88,7 +88,7 @@ public class DynamicAPI {
 
                     @Override
                     public void sendChatMessage(String message) {
-                        iCommandSender.sendTextComponent(new StringTextComponent(message));
+                        iCommandSender.addChatMessage(new TextComponentString(message));
                     }
 
                     @Override
@@ -100,7 +100,7 @@ public class DynamicAPI {
             }
 
             @Override
-            public List<String> getTabCompletetionOptions(MinecraftServer minecraftServer, ICommandSender iCommandSender, String[] strings, BlockPosition blockPosition) {
+            public List<String> getTabCompletionOptions(MinecraftServer minecraftServer, ICommandSender iCommandSender, String[] strings, BlockPos blockPos) {
                 return null;
             }
 
@@ -110,12 +110,12 @@ public class DynamicAPI {
             }
 
             @Override
-            public int compareTo(AbstractCommand o) {
+            public int compareTo(ICommand o) {
                 return 0;
             }
         };
         MinecraftServer minecraftServer = Injection.server;
-        CommandHandler handler = (CommandHandler) minecraftServer.N();
+        CommandHandler handler = (CommandHandler) minecraftServer.getCommandManager();
         handler.registerCommand(mcCommand);
     }
 
