@@ -6,6 +6,8 @@ import net.dynamicapi.command.DynamicCommand;
 import net.dynamicapi.command.defaults.CommandAPIVersion;
 import net.dynamicapi.command.defaults.CommandAbout;
 import net.dynamicapi.command.defaults.CommandHelp;
+import net.dynamicapi.entity.EntityPlayer;
+import net.dynamicapi.impl.ImplementedPlayer;
 import net.dynamicapi.plugin.PluginLoader;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandHandler;
@@ -20,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The entry point from BlockFramework to DynamicAPI.
@@ -142,5 +145,13 @@ public class DynamicAPI {
             }
         }
         LOGGER.info("[DynamicAPI] DynamicAPI has finished loading all dynamic plugins.");
+    }
+
+    public EntityPlayer getPlayerFromName(String name) {
+        return new ImplementedPlayer(Injection.server.getPlayerList().getPlayerByUsername(name));
+    }
+
+    public EntityPlayer getPlayerFromUUID(UUID uuid) {
+        return new ImplementedPlayer(Injection.server.getPlayerList().getPlayerByUUID(uuid));
     }
 }
