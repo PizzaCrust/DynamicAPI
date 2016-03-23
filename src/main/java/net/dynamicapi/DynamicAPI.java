@@ -11,6 +11,8 @@ import net.dynamicapi.command.defaults.CommandAPIVersion;
 import net.dynamicapi.command.defaults.CommandAbout;
 import net.dynamicapi.command.defaults.CommandHelp;
 import net.dynamicapi.entity.EntityPlayer;
+import net.dynamicapi.event.handle.EventManager;
+import net.dynamicapi.event.nms.WorldEventListener;
 import net.dynamicapi.impl.ImplementedPlayer;
 import net.dynamicapi.plugin.PluginLoader;
 import net.minecraft.command.CommandException;
@@ -20,6 +22,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -143,7 +146,15 @@ public class DynamicAPI {
                     method.setBody("return this.vanilla." + getDisplayObfName + "()." + getUnformattedTextObfName + "();");
                 }
             }
+            CtClass worldEventListener = BlockFramework.classPath.getCtClass("net.dynamicapi.event.nms.WorldEventListener");
+            for (CtMethod method : worldEventListener.getDeclaredMethods()) {
+                String addListener = "a";
+                if (method.getName().equals("add")) {
+                    method.setBody("$1." + addListener + "(new net.dynamicapi.event.nms.WorldEventListener());");
+                }
+            }
             playerImplementation.toClass();
+            worldEventListener.toClass();
         } catch (Exception e) {
             LOGGER.error("[DynamicAPI] Failed to patch SpecialSource errors, API may not work correctly!");
             e.printStackTrace();
@@ -152,6 +163,11 @@ public class DynamicAPI {
         DynamicAPI.registerCommand(new CommandAPIVersion());
         DynamicAPI.registerCommand(new CommandAbout());
         DynamicAPI.registerCommand(new CommandHelp());
+        for (WorldServer server : Injection.server.worldServers) {
+            WorldEventListener.add(server);
+        }
+        LOGGER.info("[DynamicAPI] Starting event manager...");
+        EventManager.init();
         LOGGER.info("[DynamicAPI] Searching for dynamic plugins...");
         File[] dynamicFiles = Injection.PLUGINS_DIR.listFiles(new FilenameFilter() {
             @Override
