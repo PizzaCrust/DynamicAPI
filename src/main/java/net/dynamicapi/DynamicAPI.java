@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -154,5 +155,14 @@ public class DynamicAPI {
 
     public static EntityPlayer getPlayerFromUUID(UUID uuid) {
         return new ImplementedPlayer(Injection.server.getPlayerList().getPlayerByUUID(uuid));
+    }
+
+    public static EntityPlayer[] getOnlinePlayers() {
+        ArrayList<EntityPlayer> players = new ArrayList<>();
+        String[] onlineUsernames = Injection.server.getPlayerList().getAllUsernames();
+        for (String username : onlineUsernames) {
+            players.add(DynamicAPI.getPlayerFromName(username));
+        }
+        return players.toArray(new EntityPlayer[players.size()]);
     }
 }
